@@ -24,40 +24,28 @@ public class DatabaseManagerImpl implements DatabaseManager {
 	@Override
 	public ProductVO getById(Integer id) throws SQLException, IOException {
 		final String query = DBUtils.getQueryFromProperties(prodByIDKey);
-		
+
 		ProductVO prod = null;
-		
-		Connection conn = null;
-		PreparedStatement ps = null;
-		try {
-			conn = DBUtils.getConnection();
-			ps = conn.prepareStatement(query);
+
+		try (Connection conn = DBUtils.getConnection(); 
+				PreparedStatement ps = conn.prepareStatement(query);) {
+
 			ps.setInt(1, id);
-			
+
 			final ResultSet rs = ps.executeQuery();
 			rs.next();
 			prod = DBUtils.mapProduct(rs);
 			rs.close();
-		} catch(final ClassNotFoundException | SQLException e) {
+		} catch (final ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 			throw new SQLException(e);
-		} finally {
-			try {
-				if (conn != null)
-					conn.close();
-				if (ps != null)
-					ps.close();
-			} catch (final SQLException e) {
-				e.printStackTrace();
-				throw e;
-			}
 		}
 		return prod;
 	}
 
 	@Override
 	public ProductVO[] getAllProducts() throws SQLException, IOException {
-final String query = DBUtils.getQueryFromProperties(prodAllKey);
+		final String query = DBUtils.getQueryFromProperties(prodAllKey);
 		
 		List<ProductVO> prods = new ArrayList<>();
 		
@@ -87,6 +75,27 @@ final String query = DBUtils.getQueryFromProperties(prodAllKey);
 			}
 		}
 		return prods.toArray(new ProductVO[0]);
+	}
+	
+	@Override
+	public boolean checkIsUp() {
+		Connection conn = null;
+		try {
+			conn = DBUtils.getConnection();
+			conn.getMetaData().getCatalogs();
+			return true;
+		} catch (SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+		}
 	}
 
 }

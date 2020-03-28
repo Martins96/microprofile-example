@@ -53,6 +53,12 @@ public class ResourceHelloWorldTest {
                 , ResourceHelloWorldTest.class.getName() + ".war")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
                 .addAsResource(new File("src/main/resources/persistency-query.properties"))
+                .addAsManifestResource(
+                		new File("src/main/webapp/META-INF/microprofile-config.properties"))
+                .addAsManifestResource(new File(
+                		"src/main/webapp/META-INF/"
+                		+ "services/org.eclipse.microprofile.config.spi.Converter"), 
+                		  "services/org.eclipse.microprofile.config.spi.Converter")
         		.addPackages(true, "com.example.demo")
                 .addAsLibraries(deps);
 		return wrap;
@@ -121,6 +127,18 @@ public class ResourceHelloWorldTest {
 			.body("name", notNullValue())
 			.contentType(ContentType.JSON);
 		
+	}
+	
+	@Test
+	@RunAsClient
+	public void testConfiguredProduct() {
+		final Response resp = ClientBuilder.newBuilder()
+				.build()
+				.target("http://localhost:8080/rest/product/configured")
+				.request()
+				.get();
+		
+		System.out.println(resp.readEntity(String.class));
 	}
 	
 	

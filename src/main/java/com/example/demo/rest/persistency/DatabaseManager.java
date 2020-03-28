@@ -7,6 +7,8 @@ import com.example.demo.rest.vo.ProductVO;
 
 public interface DatabaseManager {
 	
+	public boolean checkIsUp();
+	
 	public ProductVO getById(Integer id) throws SQLException, IOException;
 	public ProductVO[] getAllProducts() throws SQLException, IOException;
 	
