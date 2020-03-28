@@ -55,6 +55,8 @@ public class ResourceHelloWorldTest {
                 .addAsResource(new File("src/main/resources/persistency-query.properties"))
                 .addAsManifestResource(
                 		new File("src/main/webapp/META-INF/microprofile-config.properties"))
+                .addAsManifestResource(
+                		new File("src/main/webapp/META-INF/beans.xml"))
                 .addAsManifestResource(new File(
                 		"src/main/webapp/META-INF/"
                 		+ "services/org.eclipse.microprofile.config.spi.Converter"), 
