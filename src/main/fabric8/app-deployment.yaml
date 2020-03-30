@@ -1,0 +1,40 @@
+---
+metadata:
+  name:  microprofile-prova-app
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        project: ${project.artifactId}
+        version: ${project.version}
+    spec:
+      containers:
+      - env:
+        - name: JAVA_OPTIONS
+          value: -Ddb.maria.url.endpoint=jdbc:mariadb://172.30.112.35/test
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /health
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 10
+          successThreshold: 1
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /health
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 180
+          successThreshold: 1
+  triggers:
+  - imageChangeParams:
+      automatic: true
+      containerNames:
+      - thorntail-v2
+      from:
+        kind: ImageStreamTag
+        name: microprofile-prova:latest
+    type: ImageChange

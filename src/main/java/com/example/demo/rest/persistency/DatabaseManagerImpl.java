@@ -9,13 +9,14 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Priority;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
+
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import com.example.demo.rest.vo.ProductVO;
 
 @Stateless
-@Priority(1)
 public class DatabaseManagerImpl implements DatabaseManager {
 	
 	private static final String prodByIDKey = "product.get.byid";
@@ -45,6 +46,7 @@ public class DatabaseManagerImpl implements DatabaseManager {
 
 	@Override
 	public ProductVO[] getAllProducts() throws SQLException, IOException {
+		
 		final String query = DBUtils.getQueryFromProperties(prodAllKey);
 		
 		List<ProductVO> prods = new ArrayList<>();
