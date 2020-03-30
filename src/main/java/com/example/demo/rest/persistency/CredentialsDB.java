@@ -5,8 +5,8 @@ public class CredentialsDB {
 	
 	private final String JDBC_DRIVER = "org.mariadb.jdbc.Driver";
 	
-	private final String DB_URL = "jdbc:mariadb://127.0.0.1/test";
-//	private final String DB_URL = "jdbc:mariadb://172.30.181.216/test";
+//	private final String DB_URL = "jdbc:mariadb://127.0.0.1/test";
+	private final String DB_URL = "jdbc:mariadb://172.30.112.35/test";
 	private final String USER = "app_user";
     private final String PASS = "atp830udm02kg";
 	
