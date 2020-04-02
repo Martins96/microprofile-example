@@ -24,6 +24,7 @@ public class FaultTestServices {
 			.getLogger(FaultTestServices.class.getName());
 	private static final Random rand = new Random();
 	
+	
 	@Timeout(1000)
 	@Retry(maxRetries = 1)
 	@Fallback(fallbackMethod = "fallbackAlternative")
