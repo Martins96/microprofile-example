@@ -36,6 +36,7 @@ public class FaultTestServices {
 		log.log(Level.INFO, "Waiting random time is [" + time + "]");
 		
 		try {
+			//Sleeping random time
 			Thread.sleep(time);
 		} catch (InterruptedException e) {
 			log.log(Level.SEVERE, "Interrupted sleep, timeout");
