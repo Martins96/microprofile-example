@@ -10,9 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
-import javax.inject.Inject;
-
-import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import com.example.demo.rest.vo.ProductVO;
 
@@ -76,7 +73,7 @@ public class DatabaseManagerImpl implements DatabaseManager {
 				throw e;
 			}
 		}
-		return prods.toArray(new ProductVO[0]);
+		return prods.toArray(new ProductVO[prods.size()]);
 	}
 	
 	@Override

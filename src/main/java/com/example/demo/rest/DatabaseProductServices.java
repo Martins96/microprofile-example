@@ -12,6 +12,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.apache.commons.lang3.math.NumberUtils;
+import org.eclipse.microprofile.metrics.MetricUnits;
+import org.eclipse.microprofile.metrics.annotation.Gauge;
 
 import com.example.demo.rest.persistency.DatabaseManager;
 
@@ -51,6 +53,19 @@ public class DatabaseProductServices {
 		} catch (SQLException | IOException e) {
 			e.printStackTrace();
 			return Response.serverError().build();
+		}
+	}
+	
+	@Gauge(name = "productSize",
+			displayName = "Database Products size",
+			description = "Display the number of product inside the Database",
+			unit = MetricUnits.NONE)
+	public int gaugeProductNum() {
+		try {
+			return dbManager.getAllProducts().length;
+		} catch (SQLException | IOException e) {
+			e.printStackTrace();
+			return 0;
 		}
 	}
 	
